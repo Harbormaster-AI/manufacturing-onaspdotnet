@@ -8,7 +8,7 @@ public class MRPRun
 
  public virtual long? MrprunId { get; set; } 
  public virtual string? RunNumber { get; set; } 
- public virtual DateTime? RunDateTime { get; set; } 
+ public virtual DateTime_? RunDateTime { get; set; } 
  public virtual int? PlanningHorizonDays { get; set; } 
 public virtual Plant? Plant { get; set; } 
 public virtual ICollection<PlannedOrder> PlannedOrders { get; set; } = new List<PlannedOrder>();

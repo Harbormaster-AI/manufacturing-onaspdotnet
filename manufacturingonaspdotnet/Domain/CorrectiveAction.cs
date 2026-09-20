@@ -9,7 +9,7 @@ public class CorrectiveAction
  public virtual long? CorrectiveactionId { get; set; } 
  public virtual string? CapaNumber { get; set; } 
  public virtual string? RootCause { get; set; } 
- public virtual string? CorrectiveAction { get; set; } 
+ public virtual string? CorrectiveAction_ { get; set; } 
  public virtual DateOnly? VerificationDate { get; set; } 
 public virtual Nonconformance? Nonconformance { get; set; } 
 public virtual Employee? Owner { get; set; } 
@@ -20,7 +20,7 @@ public virtual Employee? Owner { get; set; }
             Id = request.Id,
             CapaNumber = request.CapaNumber,
             RootCause = request.RootCause,
-            CorrectiveAction = request.CorrectiveAction,
+            CorrectiveAction_ = request.CorrectiveAction_,
             VerificationDate = request.VerificationDate,
             Status = request.Status,
         };

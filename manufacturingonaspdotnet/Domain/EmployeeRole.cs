@@ -35,7 +35,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum EmployeeRole
 {
-    Operator=1,Technician=2,Supervisor=3,Planner=4,QualityEngineer=5,Buyer=6
+    Operator_=1,Technician=2,Supervisor=3,Planner=4,QualityEngineer=5,Buyer=6
 }
 
 /// <summary>

@@ -128,7 +128,7 @@ public static class CorrectiveActionEndpoints
             Id = request.Id,
             CapaNumber = request.CapaNumber,
             RootCause = request.RootCause,
-            CorrectiveAction = request.CorrectiveAction,
+            CorrectiveAction_ = request.CorrectiveAction_,
             VerificationDate = request.VerificationDate,
             Status = request.Status,
         };

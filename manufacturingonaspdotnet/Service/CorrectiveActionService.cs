@@ -60,7 +60,7 @@ public class CorrectiveActionService : ICorrectiveActionService
             }
             existing.CapaNumber = model.CapaNumber;
             existing.RootCause = model.RootCause;
-            existing.CorrectiveAction = model.CorrectiveAction;
+            existing.CorrectiveAction_ = model.CorrectiveAction_;
             existing.VerificationDate = model.VerificationDate;
             existing.Status = model.Status;
 
