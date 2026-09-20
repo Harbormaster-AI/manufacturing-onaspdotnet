@@ -1,0 +1,56 @@
+{
+    "name": "ASP.NET-10",
+    "shortName": "ASP.NET",
+    "description": "ASP.NET 10 is Microsoftâs latest cross-platform web framework for building high-performance, cloud-ready applications and APIs with modern C# and .NET. It provides a unified platform for building scalable backend services, including REST APIs, Minimal APIs, web applications, and enterprise systems.",
+    "summary": "ASP.NET 10 is Microsoftâs latest cross-platform web framework for building high-performance, cloud-ready applications and APIs with modern C# and .NET.",
+    "iconUrl": "blueprints/asp-dot-net-blueprint-header-image.png",
+    "infoPageUrl": "http://www.harbormaster.net/infopages/asp.net.blueprint",
+    "version": "1.1",
+    "type": "FirstClass",
+    "appType": "webapp",
+    "releaseStatus": "production",
+    "techSourceType": "commercial",
+    "majorTechnology" : "ASPDotNet",
+    "published": "true",
+    "supportsDocker": "true",
+    "supportsKubernetes": "true",
+    "derivedFrom": "common",
+    "category": "backend_framework",
+    "primaryVendor": "Microsoft",
+    "designPattern": "MVC",
+    "architectureStyle": "Layered",
+    "useCases": "Portal, REST API, SaaS Platform, Marketplace, Workflow Engine, Case Management, Financial Services, Healthcare, Supply Chain Management",
+    "architecturePreviewUrl": "blueprints/architecture.diagrams/asp.net-blueprint-system-diagram.png",
+    "metadata": "ASP.NET Core, Clean Architecture, Domain-Driven Design, Microservices, CQRS, Event Sourcing, Entity Framework Core, SQL Server, Azure, Docker, Kubernetes, OAuth2, Azure AD, Multi-Tenant, Production Ready, Gold Certified",
+    "languages": {
+       "language": [
+        {
+          "name": "C#",
+          "version": "14"
+        },
+        {
+          "name": "javascript"
+        },
+        {
+          "name": "HTML5"
+        },
+        {
+          "name": ".cshtml"
+        }
+      ]
+    },
+    "techStack": {
+      "techStackComponents": [
+        {
+          "tech": "ASPDotNet",
+          "description": "model and controller",
+          "appLayerType": "business"
+        },
+        {
+          "tech": "Nuget",
+          "description": "build and package",
+          "appLayerType": "build"
+        }
+      ]
+    }
+}

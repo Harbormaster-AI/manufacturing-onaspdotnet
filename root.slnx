@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="manufacturingonaspdotnet/manufacturingonaspdotnet.Api.csproj" />
+  <Project Path="manufacturingonaspdotnet/Tests/manufacturingonaspdotnet.Tests.csproj" />
+</Solution>

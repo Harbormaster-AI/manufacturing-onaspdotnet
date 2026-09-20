@@ -1,0 +1,85 @@
+{
+    "name": "nuget",
+    "options": [
+      {
+        "name": "userName",
+        "value": "",
+        "required": "true",
+        "description": "",
+        "type": "input"
+      },
+      {
+        "name": "password",
+        "value": "",
+        "required": "true",
+        "description": "",
+        "type": "password"
+      },
+      {
+        "name": "serverUrl",
+        "value": "",
+        "required": "true",
+        "description": "server Url",
+        "placeHolder": "ex: http://localhost:8081/artifactory, etc..",
+        "type": "input"
+      },
+      {
+        "name": "repoKey",
+        "value": "",
+        "placeHolder": "local-nuget-repo",
+        "required": "false",
+        "description": "repository key",
+        "type": "input"
+      },
+      {
+        "name": "licenseUrl",
+        "value": "",
+        "required": "true",
+        "description": "License file Url",
+        "type": "input"
+      },
+      {
+        "name": "projectUrl",
+        "value": "",
+        "required": "true",
+        "description": "URL of the application project",
+        "type": "input"
+      },
+      {
+        "name": "iconUrl",
+        "value": "",
+        "required": "true",
+        "description": "URL of the application icon",
+        "type": "input"
+      },
+      {
+        "name": "releaseNotes",
+        "value": "",
+        "required": "true",
+        "description": "release notes",
+        "type": "textarea"
+      },
+      {
+        "name": "copyRight",
+        "value": "",
+        "required": "true",
+        "description": "application copyright phrase",
+        "type": "input"
+      },
+      {
+        "name": "tags",
+        "value": "",
+        "required": "true",
+        "description": "meta tags used to help search for this app pkg",
+        "type": "input"
+      },
+      {
+        "name": "requireLicenseAcceptance",
+        "value": "false",
+        "required": "true",
+        "description": "Require license acceptance on install",
+        "type": "checkbox"
+      }
+    ]
+
+}
