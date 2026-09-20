@@ -8,8 +8,8 @@ public class WorkOrder
 
  public virtual long? WorkorderId { get; set; } 
  public virtual string? WorkOrderNumber { get; set; } 
- public virtual DateTime_? PlannedStart { get; set; } 
- public virtual DateTime_? PlannedEnd { get; set; } 
+ public virtual DateTime? PlannedStart { get; set; } 
+ public virtual DateTime? PlannedEnd { get; set; } 
  public virtual Quantity? Quantity { get; set; } 
  public virtual int? Priority { get; set; } 
 public virtual Item? Item { get; set; } 

@@ -9,7 +9,7 @@ public class InventoryTransaction
  public virtual long? InventorytransactionId { get; set; } 
  public virtual string? TransactionNumber { get; set; } 
  public virtual Quantity? Quantity { get; set; } 
- public virtual DateTime_? TransactionDateTime { get; set; } 
+ public virtual DateTime? TransactionDateTime { get; set; } 
  public virtual string? ReferenceDocument { get; set; } 
 public virtual Item? Item { get; set; } 
 public virtual Location? Location { get; set; } 

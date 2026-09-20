@@ -238,8 +238,8 @@ public class OperationResponse : OperationRequest {
 public class WorkOrderRequest {
     public Guid Id { get; set; } = Guid.NewGuid();
  public virtual string? WorkOrderNumber { get; set; } 
- public virtual DateTime_? PlannedStart { get; set; } 
- public virtual DateTime_? PlannedEnd { get; set; } 
+ public virtual DateTime? PlannedStart { get; set; } 
+ public virtual DateTime? PlannedEnd { get; set; } 
  public virtual Quantity? Quantity { get; set; } 
  public virtual int? Priority { get; set; } 
  public virtual WorkOrderStatus? Status { get; set; } 
@@ -443,7 +443,7 @@ public class InventoryTransactionRequest {
     public Guid Id { get; set; } = Guid.NewGuid();
  public virtual string? TransactionNumber { get; set; } 
  public virtual Quantity? Quantity { get; set; } 
- public virtual DateTime_? TransactionDateTime { get; set; } 
+ public virtual DateTime? TransactionDateTime { get; set; } 
  public virtual string? ReferenceDocument { get; set; } 
  public virtual InventoryTransactionType? TransactionType { get; set; } 
 }
@@ -588,7 +588,7 @@ public class InspectionLotRequest {
  public virtual string? LotNumber { get; set; } 
  public virtual Quantity? Quantity { get; set; } 
  public virtual int? SampleSize { get; set; } 
- public virtual DateTime_? CreatedOn { get; set; } 
+ public virtual DateTime? CreatedOn { get; set; } 
  public virtual InspectionType? InspectionType { get; set; } 
  public virtual InspectionStatus? Status { get; set; } 
 }
@@ -610,7 +610,7 @@ public class InspectionLotResponse : InspectionLotRequest {
 public class InspectionResultRequest {
     public Guid Id { get; set; } = Guid.NewGuid();
  public virtual Measurement? ResultValue { get; set; } 
- public virtual DateTime_? RecordedOn { get; set; } 
+ public virtual DateTime? RecordedOn { get; set; } 
  public virtual string? Notes { get; set; } 
  public virtual InspectionResultStatus? ResultStatus { get; set; } 
 }
@@ -830,7 +830,7 @@ public class ForecastLineResponse : ForecastLineRequest {
 public class MRPRunRequest {
     public Guid Id { get; set; } = Guid.NewGuid();
  public virtual string? RunNumber { get; set; } 
- public virtual DateTime_? RunDateTime { get; set; } 
+ public virtual DateTime? RunDateTime { get; set; } 
  public virtual int? PlanningHorizonDays { get; set; } 
  public virtual MRPRunStatus? Status { get; set; } 
 }

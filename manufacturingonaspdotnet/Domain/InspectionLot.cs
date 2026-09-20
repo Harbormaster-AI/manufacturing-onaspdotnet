@@ -10,7 +10,7 @@ public class InspectionLot
  public virtual string? LotNumber { get; set; } 
  public virtual Quantity? Quantity { get; set; } 
  public virtual int? SampleSize { get; set; } 
- public virtual DateTime_? CreatedOn { get; set; } 
+ public virtual DateTime? CreatedOn { get; set; } 
 public virtual Item? Item { get; set; } 
 public virtual WorkOrder? WorkOrder { get; set; } 
 public virtual GoodsReceipt? GoodsReceipt { get; set; } 
