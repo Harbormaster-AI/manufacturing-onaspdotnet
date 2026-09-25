@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -48,4 +51,5 @@ public class MaintenanceOrderRepository : IMaintenanceOrderRepository
         _db.MaintenanceOrders.Remove(maintenanceOrder);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
 }

@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -46,4 +49,41 @@ public class GoodsReceiptRepository : IGoodsReceiptRepository
         _db.GoodsReceipts.Remove(goodsReceipt);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToLinesAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.GoodsReceiptLines
+            .Where(goodsReceiptLine =>
+                request.ChildIds.Contains(goodsReceiptLine.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    goodsReceiptLine =>
+                        EF.Property<Guid?>(
+                            goodsReceiptLine,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromLinesAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.GoodsReceiptLines
+            .Where(goodsReceiptLine =>
+                request.ChildIds.Contains(goodsReceiptLine.Id) &&
+                EF.Property<Guid?>(
+                    goodsReceiptLine,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    goodsReceiptLine =>
+                        EF.Property<Guid?>(
+                            goodsReceiptLine,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
 }

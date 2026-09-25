@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -44,4 +47,77 @@ public class EmployeeRepository : IEmployeeRepository
         _db.Employees.Remove(employee);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToShiftAssignmentsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.ShiftAssignments
+            .Where(shiftAssignment =>
+                request.ChildIds.Contains(shiftAssignment.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    shiftAssignment =>
+                        EF.Property<Guid?>(
+                            shiftAssignment,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromShiftAssignmentsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.ShiftAssignments
+            .Where(shiftAssignment =>
+                request.ChildIds.Contains(shiftAssignment.Id) &&
+                EF.Property<Guid?>(
+                    shiftAssignment,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    shiftAssignment =>
+                        EF.Property<Guid?>(
+                            shiftAssignment,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToCorrectiveActionsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.CorrectiveActions
+            .Where(correctiveAction =>
+                request.ChildIds.Contains(correctiveAction.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    correctiveAction =>
+                        EF.Property<Guid?>(
+                            correctiveAction,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromCorrectiveActionsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.CorrectiveActions
+            .Where(correctiveAction =>
+                request.ChildIds.Contains(correctiveAction.Id) &&
+                EF.Property<Guid?>(
+                    correctiveAction,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    correctiveAction =>
+                        EF.Property<Guid?>(
+                            correctiveAction,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
 }

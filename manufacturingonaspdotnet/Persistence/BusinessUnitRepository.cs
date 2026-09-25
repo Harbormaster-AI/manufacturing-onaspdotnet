@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -44,4 +47,77 @@ public class BusinessUnitRepository : IBusinessUnitRepository
         _db.BusinessUnits.Remove(businessUnit);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToItemsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Items
+            .Where(item =>
+                request.ChildIds.Contains(item.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    item =>
+                        EF.Property<Guid?>(
+                            item,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromItemsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Items
+            .Where(item =>
+                request.ChildIds.Contains(item.Id) &&
+                EF.Property<Guid?>(
+                    item,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    item =>
+                        EF.Property<Guid?>(
+                            item,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToPlantsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Plants
+            .Where(plant =>
+                request.ChildIds.Contains(plant.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    plant =>
+                        EF.Property<Guid?>(
+                            plant,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromPlantsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Plants
+            .Where(plant =>
+                request.ChildIds.Contains(plant.Id) &&
+                EF.Property<Guid?>(
+                    plant,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    plant =>
+                        EF.Property<Guid?>(
+                            plant,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
 }

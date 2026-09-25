@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -44,4 +47,41 @@ public class ProductionScheduleRepository : IProductionScheduleRepository
         _db.ProductionSchedules.Remove(productionSchedule);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToWorkOrdersAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.WorkOrders
+            .Where(workOrder =>
+                request.ChildIds.Contains(workOrder.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    workOrder =>
+                        EF.Property<Guid?>(
+                            workOrder,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromWorkOrdersAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.WorkOrders
+            .Where(workOrder =>
+                request.ChildIds.Contains(workOrder.Id) &&
+                EF.Property<Guid?>(
+                    workOrder,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    workOrder =>
+                        EF.Property<Guid?>(
+                            workOrder,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
 }

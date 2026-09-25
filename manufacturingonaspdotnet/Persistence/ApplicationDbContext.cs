@@ -11,47 +11,47 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-public DbSet<Enterprise> Enterprises => Set<Enterprise>();
-public DbSet<BusinessUnit> BusinessUnits => Set<BusinessUnit>();
-public DbSet<Plant> Plants => Set<Plant>();
-public DbSet<ProductionLine> ProductionLines => Set<ProductionLine>();
-public DbSet<WorkCenter> WorkCenters => Set<WorkCenter>();
-public DbSet<Item> Items => Set<Item>();
-public DbSet<BOM> BOMs => Set<BOM>();
-public DbSet<BOMItem> BOMItems => Set<BOMItem>();
-public DbSet<Routing> Routings => Set<Routing>();
-public DbSet<Operation> Operations => Set<Operation>();
-public DbSet<WorkOrder> WorkOrders => Set<WorkOrder>();
-public DbSet<ProductionSchedule> ProductionSchedules => Set<ProductionSchedule>();
-public DbSet<Supplier> Suppliers => Set<Supplier>();
-public DbSet<PurchaseOrder> PurchaseOrders => Set<PurchaseOrder>();
-public DbSet<PurchaseOrderLine> PurchaseOrderLines => Set<PurchaseOrderLine>();
-public DbSet<GoodsReceipt> GoodsReceipts => Set<GoodsReceipt>();
-public DbSet<GoodsReceiptLine> GoodsReceiptLines => Set<GoodsReceiptLine>();
-public DbSet<Warehouse> Warehouses => Set<Warehouse>();
-public DbSet<Location> Locations => Set<Location>();
-public DbSet<InventoryItem> InventoryItems => Set<InventoryItem>();
-public DbSet<InventoryTransaction> InventoryTransactions => Set<InventoryTransaction>();
-public DbSet<Customer> Customers => Set<Customer>();
-public DbSet<SalesOrder> SalesOrders => Set<SalesOrder>();
-public DbSet<SalesOrderLine> SalesOrderLines => Set<SalesOrderLine>();
-public DbSet<QualitySpecification> QualitySpecifications => Set<QualitySpecification>();
-public DbSet<InspectionPlan> InspectionPlans => Set<InspectionPlan>();
-public DbSet<InspectionCharacteristic> InspectionCharacteristics => Set<InspectionCharacteristic>();
-public DbSet<InspectionLot> InspectionLots => Set<InspectionLot>();
-public DbSet<InspectionResult> InspectionResults => Set<InspectionResult>();
-public DbSet<Nonconformance> Nonconformances => Set<Nonconformance>();
-public DbSet<CorrectiveAction> CorrectiveActions => Set<CorrectiveAction>();
-public DbSet<Asset> Assets => Set<Asset>();
-public DbSet<MaintenancePlan> MaintenancePlans => Set<MaintenancePlan>();
-public DbSet<MaintenanceOrder> MaintenanceOrders => Set<MaintenanceOrder>();
-public DbSet<Employee> Employees => Set<Employee>();
-public DbSet<Shift> Shifts => Set<Shift>();
-public DbSet<ShiftAssignment> ShiftAssignments => Set<ShiftAssignment>();
-public DbSet<Forecast> Forecasts => Set<Forecast>();
-public DbSet<ForecastLine> ForecastLines => Set<ForecastLine>();
-public DbSet<MRPRun> MRPRuns => Set<MRPRun>();
-public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
+    public DbSet<Enterprise> Enterprises => Set<Enterprise>();
+    public DbSet<BusinessUnit> BusinessUnits => Set<BusinessUnit>();
+    public DbSet<Plant> Plants => Set<Plant>();
+    public DbSet<ProductionLine> ProductionLines => Set<ProductionLine>();
+    public DbSet<WorkCenter> WorkCenters => Set<WorkCenter>();
+    public DbSet<Item> Items => Set<Item>();
+    public DbSet<BOM> BOMs => Set<BOM>();
+    public DbSet<BOMItem> BOMItems => Set<BOMItem>();
+    public DbSet<Routing> Routings => Set<Routing>();
+    public DbSet<Operation> Operations => Set<Operation>();
+    public DbSet<WorkOrder> WorkOrders => Set<WorkOrder>();
+    public DbSet<ProductionSchedule> ProductionSchedules => Set<ProductionSchedule>();
+    public DbSet<Supplier> Suppliers => Set<Supplier>();
+    public DbSet<PurchaseOrder> PurchaseOrders => Set<PurchaseOrder>();
+    public DbSet<PurchaseOrderLine> PurchaseOrderLines => Set<PurchaseOrderLine>();
+    public DbSet<GoodsReceipt> GoodsReceipts => Set<GoodsReceipt>();
+    public DbSet<GoodsReceiptLine> GoodsReceiptLines => Set<GoodsReceiptLine>();
+    public DbSet<Warehouse> Warehouses => Set<Warehouse>();
+    public DbSet<Location> Locations => Set<Location>();
+    public DbSet<InventoryItem> InventoryItems => Set<InventoryItem>();
+    public DbSet<InventoryTransaction> InventoryTransactions => Set<InventoryTransaction>();
+    public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<SalesOrder> SalesOrders => Set<SalesOrder>();
+    public DbSet<SalesOrderLine> SalesOrderLines => Set<SalesOrderLine>();
+    public DbSet<QualitySpecification> QualitySpecifications => Set<QualitySpecification>();
+    public DbSet<InspectionPlan> InspectionPlans => Set<InspectionPlan>();
+    public DbSet<InspectionCharacteristic> InspectionCharacteristics => Set<InspectionCharacteristic>();
+    public DbSet<InspectionLot> InspectionLots => Set<InspectionLot>();
+    public DbSet<InspectionResult> InspectionResults => Set<InspectionResult>();
+    public DbSet<Nonconformance> Nonconformances => Set<Nonconformance>();
+    public DbSet<CorrectiveAction> CorrectiveActions => Set<CorrectiveAction>();
+    public DbSet<Asset> Assets => Set<Asset>();
+    public DbSet<MaintenancePlan> MaintenancePlans => Set<MaintenancePlan>();
+    public DbSet<MaintenanceOrder> MaintenanceOrders => Set<MaintenanceOrder>();
+    public DbSet<Employee> Employees => Set<Employee>();
+    public DbSet<Shift> Shifts => Set<Shift>();
+    public DbSet<ShiftAssignment> ShiftAssignments => Set<ShiftAssignment>();
+    public DbSet<Forecast> Forecasts => Set<Forecast>();
+    public DbSet<ForecastLine> ForecastLines => Set<ForecastLine>();
+    public DbSet<MRPRun> MRPRuns => Set<MRPRun>();
+    public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -62,25 +62,25 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<BusinessUnit>()
             .HasOne<Enterprise>()
             .WithMany(parent => parent.BusinessUnits)
-            .HasForeignKey("BusinessUnits_Id");
+            .HasForeignKey("Enterprise_Id");
 
         // Enterprise has one or more Plants of type Plant
         modelBuilder.Entity<Plant>()
             .HasOne<Enterprise>()
             .WithMany(parent => parent.Plants)
-            .HasForeignKey("Plants_Id");
+            .HasForeignKey("Enterprise_Id");
 
         // Enterprise has one or more Suppliers of type Supplier
         modelBuilder.Entity<Supplier>()
             .HasOne<Enterprise>()
             .WithMany(parent => parent.Suppliers)
-            .HasForeignKey("Suppliers_Id");
+            .HasForeignKey("Enterprise_Id");
 
         // Enterprise has one or more Customers of type Customer
         modelBuilder.Entity<Customer>()
             .HasOne<Enterprise>()
             .WithMany(parent => parent.Customers)
-            .HasForeignKey("Customers_Id");
+            .HasForeignKey("Enterprise_Id");
 
         // BusinessUnit has one Enterprise of type Enterprise
         modelBuilder.Entity<BusinessUnit>()
@@ -93,13 +93,13 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<Item>()
             .HasOne<BusinessUnit>()
             .WithMany(parent => parent.Items)
-            .HasForeignKey("Items_Id");
+            .HasForeignKey("BusinessUnit_Id");
 
         // BusinessUnit has one or more Plants of type Plant
         modelBuilder.Entity<Plant>()
             .HasOne<BusinessUnit>()
             .WithMany(parent => parent.Plants)
-            .HasForeignKey("Plants_Id");
+            .HasForeignKey("BusinessUnit_Id");
 
         // Plant has one Enterprise of type Enterprise
         modelBuilder.Entity<Plant>()
@@ -112,31 +112,31 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<ProductionLine>()
             .HasOne<Plant>()
             .WithMany(parent => parent.ProductionLines)
-            .HasForeignKey("ProductionLines_Id");
+            .HasForeignKey("Plant_Id");
 
         // Plant has one or more WorkCenters of type WorkCenter
         modelBuilder.Entity<WorkCenter>()
             .HasOne<Plant>()
             .WithMany(parent => parent.WorkCenters)
-            .HasForeignKey("WorkCenters_Id");
+            .HasForeignKey("Plant_Id");
 
         // Plant has one or more Warehouses of type Warehouse
         modelBuilder.Entity<Warehouse>()
             .HasOne<Plant>()
             .WithMany(parent => parent.Warehouses)
-            .HasForeignKey("Warehouses_Id");
+            .HasForeignKey("Plant_Id");
 
         // Plant has one or more Assets of type Asset
         modelBuilder.Entity<Asset>()
             .HasOne<Plant>()
             .WithMany(parent => parent.Assets)
-            .HasForeignKey("Assets_Id");
+            .HasForeignKey("Plant_Id");
 
         // Plant has one or more ProductionSchedules of type ProductionSchedule
         modelBuilder.Entity<ProductionSchedule>()
             .HasOne<Plant>()
             .WithMany(parent => parent.ProductionSchedules)
-            .HasForeignKey("ProductionSchedules_Id");
+            .HasForeignKey("Plant_Id");
 
         // ProductionLine has one Plant of type Plant
         modelBuilder.Entity<ProductionLine>()
@@ -149,7 +149,7 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<WorkCenter>()
             .HasOne<ProductionLine>()
             .WithMany(parent => parent.WorkCenters)
-            .HasForeignKey("WorkCenters_Id");
+            .HasForeignKey("ProductionLine_Id");
 
         // WorkCenter has one ProductionLine of type ProductionLine
         modelBuilder.Entity<WorkCenter>()
@@ -162,13 +162,13 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<Asset>()
             .HasOne<WorkCenter>()
             .WithMany(parent => parent.Assets)
-            .HasForeignKey("Assets_Id");
+            .HasForeignKey("WorkCenter_Id");
 
         // WorkCenter has one or more MaintenanceOrders of type MaintenanceOrder
         modelBuilder.Entity<MaintenanceOrder>()
             .HasOne<WorkCenter>()
             .WithMany(parent => parent.MaintenanceOrders)
-            .HasForeignKey("MaintenanceOrders_Id");
+            .HasForeignKey("WorkCenter_Id");
 
         // Item has one BusinessUnit of type BusinessUnit
         modelBuilder.Entity<Item>()
@@ -181,31 +181,31 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<BOM>()
             .HasOne<Item>()
             .WithMany(parent => parent.Boms)
-            .HasForeignKey("Boms_Id");
+            .HasForeignKey("Item_Id");
 
         // Item has one or more Routings of type Routing
         modelBuilder.Entity<Routing>()
             .HasOne<Item>()
             .WithMany(parent => parent.Routings)
-            .HasForeignKey("Routings_Id");
+            .HasForeignKey("Item_Id");
 
         // Item has one or more Suppliers of type Supplier
         modelBuilder.Entity<Supplier>()
             .HasOne<Item>()
             .WithMany(parent => parent.Suppliers)
-            .HasForeignKey("Suppliers_Id");
+            .HasForeignKey("Item_Id");
 
         // Item has one or more QualitySpecifications of type QualitySpecification
         modelBuilder.Entity<QualitySpecification>()
             .HasOne<Item>()
             .WithMany(parent => parent.QualitySpecifications)
-            .HasForeignKey("QualitySpecifications_Id");
+            .HasForeignKey("Item_Id");
 
         // Item has one or more InventoryItems of type InventoryItem
         modelBuilder.Entity<InventoryItem>()
             .HasOne<Item>()
             .WithMany(parent => parent.InventoryItems)
-            .HasForeignKey("InventoryItems_Id");
+            .HasForeignKey("Item_Id");
 
         // BOM has one ParentItem of type Item
         modelBuilder.Entity<BOM>()
@@ -218,7 +218,7 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<BOMItem>()
             .HasOne<BOM>()
             .WithMany(parent => parent.BomItems)
-            .HasForeignKey("BomItems_Id");
+            .HasForeignKey("BOM_Id");
 
         // BOMItem has one Bom of type BOM
         modelBuilder.Entity<BOMItem>()
@@ -244,7 +244,7 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<Operation>()
             .HasOne<Routing>()
             .WithMany(parent => parent.Operations)
-            .HasForeignKey("Operations_Id");
+            .HasForeignKey("Routing_Id");
 
         // Operation has one Routing of type Routing
         modelBuilder.Entity<Operation>()
@@ -313,26 +313,26 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<WorkOrder>()
             .HasOne<ProductionSchedule>()
             .WithMany(parent => parent.WorkOrders)
-            .HasForeignKey("WorkOrders_Id");
+            .HasForeignKey("ProductionSchedule_Id");
 
 
         // Supplier has one or more Enterprises of type Enterprise
         modelBuilder.Entity<Enterprise>()
             .HasOne<Supplier>()
             .WithMany(parent => parent.Enterprises)
-            .HasForeignKey("Enterprises_Id");
+            .HasForeignKey("Supplier_Id");
 
         // Supplier has one or more Items of type Item
         modelBuilder.Entity<Item>()
             .HasOne<Supplier>()
             .WithMany(parent => parent.Items)
-            .HasForeignKey("Items_Id");
+            .HasForeignKey("Supplier_Id");
 
         // Supplier has one or more PurchaseOrders of type PurchaseOrder
         modelBuilder.Entity<PurchaseOrder>()
             .HasOne<Supplier>()
             .WithMany(parent => parent.PurchaseOrders)
-            .HasForeignKey("PurchaseOrders_Id");
+            .HasForeignKey("Supplier_Id");
 
         // PurchaseOrder has one Supplier of type Supplier
         modelBuilder.Entity<PurchaseOrder>()
@@ -351,13 +351,13 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<PurchaseOrderLine>()
             .HasOne<PurchaseOrder>()
             .WithMany(parent => parent.Lines)
-            .HasForeignKey("Lines_Id");
+            .HasForeignKey("PurchaseOrder_Id");
 
         // PurchaseOrder has one or more GoodsReceipts of type GoodsReceipt
         modelBuilder.Entity<GoodsReceipt>()
             .HasOne<PurchaseOrder>()
             .WithMany(parent => parent.GoodsReceipts)
-            .HasForeignKey("GoodsReceipts_Id");
+            .HasForeignKey("PurchaseOrder_Id");
 
         // PurchaseOrderLine has one PurchaseOrder of type PurchaseOrder
         modelBuilder.Entity<PurchaseOrderLine>()
@@ -389,7 +389,7 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<GoodsReceiptLine>()
             .HasOne<GoodsReceipt>()
             .WithMany(parent => parent.Lines)
-            .HasForeignKey("Lines_Id");
+            .HasForeignKey("GoodsReceipt_Id");
 
         // GoodsReceiptLine has one GoodsReceipt of type GoodsReceipt
         modelBuilder.Entity<GoodsReceiptLine>()
@@ -421,13 +421,13 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<Location>()
             .HasOne<Warehouse>()
             .WithMany(parent => parent.Locations)
-            .HasForeignKey("Locations_Id");
+            .HasForeignKey("Warehouse_Id");
 
         // Warehouse has one or more InventoryItems of type InventoryItem
         modelBuilder.Entity<InventoryItem>()
             .HasOne<Warehouse>()
             .WithMany(parent => parent.InventoryItems)
-            .HasForeignKey("InventoryItems_Id");
+            .HasForeignKey("Warehouse_Id");
 
         // Location has one Warehouse of type Warehouse
         modelBuilder.Entity<Location>()
@@ -440,7 +440,7 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<InventoryItem>()
             .HasOne<Location>()
             .WithMany(parent => parent.InventoryItems)
-            .HasForeignKey("InventoryItems_Id");
+            .HasForeignKey("Location_Id");
 
         // InventoryItem has one Item of type Item
         modelBuilder.Entity<InventoryItem>()
@@ -491,13 +491,13 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<Enterprise>()
             .HasOne<Customer>()
             .WithMany(parent => parent.Enterprises)
-            .HasForeignKey("Enterprises_Id");
+            .HasForeignKey("Customer_Id");
 
         // Customer has one or more SalesOrders of type SalesOrder
         modelBuilder.Entity<SalesOrder>()
             .HasOne<Customer>()
             .WithMany(parent => parent.SalesOrders)
-            .HasForeignKey("SalesOrders_Id");
+            .HasForeignKey("Customer_Id");
 
         // SalesOrder has one Customer of type Customer
         modelBuilder.Entity<SalesOrder>()
@@ -516,13 +516,13 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<SalesOrderLine>()
             .HasOne<SalesOrder>()
             .WithMany(parent => parent.Lines)
-            .HasForeignKey("Lines_Id");
+            .HasForeignKey("SalesOrder_Id");
 
         // SalesOrder has one or more WorkOrders of type WorkOrder
         modelBuilder.Entity<WorkOrder>()
             .HasOne<SalesOrder>()
             .WithMany(parent => parent.WorkOrders)
-            .HasForeignKey("WorkOrders_Id");
+            .HasForeignKey("SalesOrder_Id");
 
         // SalesOrderLine has one SalesOrder of type SalesOrder
         modelBuilder.Entity<SalesOrderLine>()
@@ -555,7 +555,7 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<InspectionCharacteristic>()
             .HasOne<InspectionPlan>()
             .WithMany(parent => parent.Characteristics)
-            .HasForeignKey("Characteristics_Id");
+            .HasForeignKey("InspectionPlan_Id");
 
         // InspectionCharacteristic has one InspectionPlan of type InspectionPlan
         modelBuilder.Entity<InspectionCharacteristic>()
@@ -587,7 +587,7 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<InspectionResult>()
             .HasOne<InspectionLot>()
             .WithMany(parent => parent.Results)
-            .HasForeignKey("Results_Id");
+            .HasForeignKey("InspectionLot_Id");
 
         // InspectionResult has one InspectionLot of type InspectionLot
         modelBuilder.Entity<InspectionResult>()
@@ -657,13 +657,13 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<MaintenanceOrder>()
             .HasOne<Asset>()
             .WithMany(parent => parent.MaintenanceOrders)
-            .HasForeignKey("MaintenanceOrders_Id");
+            .HasForeignKey("Asset_Id");
 
         // Asset has one or more MaintenancePlans of type MaintenancePlan
         modelBuilder.Entity<MaintenancePlan>()
             .HasOne<Asset>()
             .WithMany(parent => parent.MaintenancePlans)
-            .HasForeignKey("MaintenancePlans_Id");
+            .HasForeignKey("Asset_Id");
 
         // MaintenancePlan has one Asset of type Asset
         modelBuilder.Entity<MaintenancePlan>()
@@ -676,7 +676,7 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<MaintenanceOrder>()
             .HasOne<MaintenancePlan>()
             .WithMany(parent => parent.MaintenanceOrders)
-            .HasForeignKey("MaintenanceOrders_Id");
+            .HasForeignKey("MaintenancePlan_Id");
 
         // MaintenanceOrder has one Asset of type Asset
         modelBuilder.Entity<MaintenanceOrder>()
@@ -708,13 +708,13 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<ShiftAssignment>()
             .HasOne<Employee>()
             .WithMany(parent => parent.ShiftAssignments)
-            .HasForeignKey("ShiftAssignments_Id");
+            .HasForeignKey("Employee_Id");
 
         // Employee has one or more CorrectiveActions of type CorrectiveAction
         modelBuilder.Entity<CorrectiveAction>()
             .HasOne<Employee>()
             .WithMany(parent => parent.CorrectiveActions)
-            .HasForeignKey("CorrectiveActions_Id");
+            .HasForeignKey("Employee_Id");
 
         // Shift has one Plant of type Plant
         modelBuilder.Entity<Shift>()
@@ -727,7 +727,7 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<ShiftAssignment>()
             .HasOne<Shift>()
             .WithMany(parent => parent.Assignments)
-            .HasForeignKey("Assignments_Id");
+            .HasForeignKey("Shift_Id");
 
         // ShiftAssignment has one Shift of type Shift
         modelBuilder.Entity<ShiftAssignment>()
@@ -753,7 +753,7 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<ForecastLine>()
             .HasOne<Forecast>()
             .WithMany(parent => parent.Lines)
-            .HasForeignKey("Lines_Id");
+            .HasForeignKey("Forecast_Id");
 
         // ForecastLine has one Forecast of type Forecast
         modelBuilder.Entity<ForecastLine>()
@@ -779,7 +779,7 @@ public DbSet<PlannedOrder> PlannedOrders => Set<PlannedOrder>();
         modelBuilder.Entity<PlannedOrder>()
             .HasOne<MRPRun>()
             .WithMany(parent => parent.PlannedOrders)
-            .HasForeignKey("PlannedOrders_Id");
+            .HasForeignKey("MRPRun_Id");
 
         // PlannedOrder has one MrpRun of type MRPRun
         modelBuilder.Entity<PlannedOrder>()

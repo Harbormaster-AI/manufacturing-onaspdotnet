@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -46,4 +49,5 @@ public class SalesOrderLineRepository : ISalesOrderLineRepository
         _db.SalesOrderLines.Remove(salesOrderLine);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
 }

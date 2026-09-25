@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -44,4 +47,41 @@ public class LocationRepository : ILocationRepository
         _db.Locations.Remove(location);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToInventoryItemsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.InventoryItems
+            .Where(inventoryItem =>
+                request.ChildIds.Contains(inventoryItem.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    inventoryItem =>
+                        EF.Property<Guid?>(
+                            inventoryItem,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromInventoryItemsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.InventoryItems
+            .Where(inventoryItem =>
+                request.ChildIds.Contains(inventoryItem.Id) &&
+                EF.Property<Guid?>(
+                    inventoryItem,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    inventoryItem =>
+                        EF.Property<Guid?>(
+                            inventoryItem,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
 }

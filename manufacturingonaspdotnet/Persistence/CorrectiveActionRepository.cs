@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -46,4 +49,5 @@ public class CorrectiveActionRepository : ICorrectiveActionRepository
         _db.CorrectiveActions.Remove(correctiveAction);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
 }

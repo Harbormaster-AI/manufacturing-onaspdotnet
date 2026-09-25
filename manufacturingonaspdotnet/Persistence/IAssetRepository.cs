@@ -1,4 +1,5 @@
 using manufacturingonaspdotnet.Domain;
+using manufacturingonaspdotnet.Contracts;
 
 namespace manufacturingonaspdotnet.Persistence;
 
@@ -9,4 +10,10 @@ public interface IAssetRepository
     Task AddAsync(Asset asset, CancellationToken cancellationToken);
     Task UpdateAsync(Asset asset, CancellationToken cancellationToken);
     Task DeleteAsync(Asset asset, CancellationToken cancellationToken);
+
+    Task AddToMaintenanceOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromMaintenanceOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToMaintenancePlansAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromMaintenancePlansAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+
 }

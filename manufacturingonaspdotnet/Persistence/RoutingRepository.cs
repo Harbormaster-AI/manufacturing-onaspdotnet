@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -44,4 +47,41 @@ public class RoutingRepository : IRoutingRepository
         _db.Routings.Remove(routing);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToOperationsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Operations
+            .Where(operation =>
+                request.ChildIds.Contains(operation.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    operation =>
+                        EF.Property<Guid?>(
+                            operation,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromOperationsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Operations
+            .Where(operation =>
+                request.ChildIds.Contains(operation.Id) &&
+                EF.Property<Guid?>(
+                    operation,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    operation =>
+                        EF.Property<Guid?>(
+                            operation,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
 }

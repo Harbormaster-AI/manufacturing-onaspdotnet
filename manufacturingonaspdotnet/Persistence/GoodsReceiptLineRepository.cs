@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -48,4 +51,5 @@ public class GoodsReceiptLineRepository : IGoodsReceiptLineRepository
         _db.GoodsReceiptLines.Remove(goodsReceiptLine);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
 }

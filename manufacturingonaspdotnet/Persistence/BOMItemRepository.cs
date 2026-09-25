@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -46,4 +49,5 @@ public class BOMItemRepository : IBOMItemRepository
         _db.BOMItems.Remove(bOMItem);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
 }

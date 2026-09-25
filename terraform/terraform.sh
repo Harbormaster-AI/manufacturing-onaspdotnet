@@ -18,10 +18,10 @@ TERRAFORM_URL="https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/${T
 if [[ "${1:-}" == "install" ]]; then
 
     echo "Updating apt package index..."
-    apt-get update
+    sudo apt-get update
 
     echo "Installing required packages..."
-    apt-get install -y curl unzip
+    sudo apt-get install -y curl unzip
 
     echo "Downloading Terraform ${TERRAFORM_VERSION}..."
     curl -fsSLO "${TERRAFORM_URL}"
@@ -67,7 +67,7 @@ echo "Creating Terraform plan..."
 terraform plan \
     -input=false \
     
--var aws-access-key= -var aws-secret-key= -var region=us-east-2 \
+-var aws-access-key=empty -var aws-secret-key=empty -var region=us-east-2 \
     -out=terraform.plan
 
 

@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -48,4 +51,5 @@ public class OperationRepository : IOperationRepository
         _db.Operations.Remove(operation);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
 }

@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -54,4 +57,5 @@ public class WorkOrderRepository : IWorkOrderRepository
         _db.WorkOrders.Remove(workOrder);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
 }

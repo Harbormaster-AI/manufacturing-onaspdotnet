@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -46,4 +49,77 @@ public class PurchaseOrderRepository : IPurchaseOrderRepository
         _db.PurchaseOrders.Remove(purchaseOrder);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToLinesAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.PurchaseOrderLines
+            .Where(purchaseOrderLine =>
+                request.ChildIds.Contains(purchaseOrderLine.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    purchaseOrderLine =>
+                        EF.Property<Guid?>(
+                            purchaseOrderLine,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromLinesAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.PurchaseOrderLines
+            .Where(purchaseOrderLine =>
+                request.ChildIds.Contains(purchaseOrderLine.Id) &&
+                EF.Property<Guid?>(
+                    purchaseOrderLine,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    purchaseOrderLine =>
+                        EF.Property<Guid?>(
+                            purchaseOrderLine,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToGoodsReceiptsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.GoodsReceipts
+            .Where(goodsReceipt =>
+                request.ChildIds.Contains(goodsReceipt.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    goodsReceipt =>
+                        EF.Property<Guid?>(
+                            goodsReceipt,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromGoodsReceiptsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.GoodsReceipts
+            .Where(goodsReceipt =>
+                request.ChildIds.Contains(goodsReceipt.Id) &&
+                EF.Property<Guid?>(
+                    goodsReceipt,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    goodsReceipt =>
+                        EF.Property<Guid?>(
+                            goodsReceipt,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
 }

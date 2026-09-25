@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -46,4 +49,77 @@ public class AssetRepository : IAssetRepository
         _db.Assets.Remove(asset);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToMaintenanceOrdersAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.MaintenanceOrders
+            .Where(maintenanceOrder =>
+                request.ChildIds.Contains(maintenanceOrder.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    maintenanceOrder =>
+                        EF.Property<Guid?>(
+                            maintenanceOrder,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromMaintenanceOrdersAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.MaintenanceOrders
+            .Where(maintenanceOrder =>
+                request.ChildIds.Contains(maintenanceOrder.Id) &&
+                EF.Property<Guid?>(
+                    maintenanceOrder,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    maintenanceOrder =>
+                        EF.Property<Guid?>(
+                            maintenanceOrder,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToMaintenancePlansAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.MaintenancePlans
+            .Where(maintenancePlan =>
+                request.ChildIds.Contains(maintenancePlan.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    maintenancePlan =>
+                        EF.Property<Guid?>(
+                            maintenancePlan,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromMaintenancePlansAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.MaintenancePlans
+            .Where(maintenancePlan =>
+                request.ChildIds.Contains(maintenancePlan.Id) &&
+                EF.Property<Guid?>(
+                    maintenancePlan,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    maintenancePlan =>
+                        EF.Property<Guid?>(
+                            maintenancePlan,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
 }

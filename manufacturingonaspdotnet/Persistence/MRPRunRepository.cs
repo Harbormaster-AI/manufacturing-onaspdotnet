@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -44,4 +47,41 @@ public class MRPRunRepository : IMRPRunRepository
         _db.MRPRuns.Remove(mRPRun);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToPlannedOrdersAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.PlannedOrders
+            .Where(plannedOrder =>
+                request.ChildIds.Contains(plannedOrder.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    plannedOrder =>
+                        EF.Property<Guid?>(
+                            plannedOrder,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromPlannedOrdersAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.PlannedOrders
+            .Where(plannedOrder =>
+                request.ChildIds.Contains(plannedOrder.Id) &&
+                EF.Property<Guid?>(
+                    plannedOrder,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    plannedOrder =>
+                        EF.Property<Guid?>(
+                            plannedOrder,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
 }

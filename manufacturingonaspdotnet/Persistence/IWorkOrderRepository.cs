@@ -1,4 +1,5 @@
 using manufacturingonaspdotnet.Domain;
+using manufacturingonaspdotnet.Contracts;
 
 namespace manufacturingonaspdotnet.Persistence;
 
@@ -9,4 +10,6 @@ public interface IWorkOrderRepository
     Task AddAsync(WorkOrder workOrder, CancellationToken cancellationToken);
     Task UpdateAsync(WorkOrder workOrder, CancellationToken cancellationToken);
     Task DeleteAsync(WorkOrder workOrder, CancellationToken cancellationToken);
+
+
 }

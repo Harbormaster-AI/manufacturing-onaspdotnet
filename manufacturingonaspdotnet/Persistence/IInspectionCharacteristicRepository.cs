@@ -1,4 +1,5 @@
 using manufacturingonaspdotnet.Domain;
+using manufacturingonaspdotnet.Contracts;
 
 namespace manufacturingonaspdotnet.Persistence;
 
@@ -9,4 +10,6 @@ public interface IInspectionCharacteristicRepository
     Task AddAsync(InspectionCharacteristic inspectionCharacteristic, CancellationToken cancellationToken);
     Task UpdateAsync(InspectionCharacteristic inspectionCharacteristic, CancellationToken cancellationToken);
     Task DeleteAsync(InspectionCharacteristic inspectionCharacteristic, CancellationToken cancellationToken);
+
+
 }

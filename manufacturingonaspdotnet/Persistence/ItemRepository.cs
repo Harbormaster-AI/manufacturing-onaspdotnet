@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -44,4 +47,185 @@ public class ItemRepository : IItemRepository
         _db.Items.Remove(item);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToBomsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.BOMs
+            .Where(bOM =>
+                request.ChildIds.Contains(bOM.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    bOM =>
+                        EF.Property<Guid?>(
+                            bOM,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromBomsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.BOMs
+            .Where(bOM =>
+                request.ChildIds.Contains(bOM.Id) &&
+                EF.Property<Guid?>(
+                    bOM,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    bOM =>
+                        EF.Property<Guid?>(
+                            bOM,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToRoutingsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Routings
+            .Where(routing =>
+                request.ChildIds.Contains(routing.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    routing =>
+                        EF.Property<Guid?>(
+                            routing,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromRoutingsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Routings
+            .Where(routing =>
+                request.ChildIds.Contains(routing.Id) &&
+                EF.Property<Guid?>(
+                    routing,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    routing =>
+                        EF.Property<Guid?>(
+                            routing,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToSuppliersAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Suppliers
+            .Where(supplier =>
+                request.ChildIds.Contains(supplier.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    supplier =>
+                        EF.Property<Guid?>(
+                            supplier,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromSuppliersAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.Suppliers
+            .Where(supplier =>
+                request.ChildIds.Contains(supplier.Id) &&
+                EF.Property<Guid?>(
+                    supplier,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    supplier =>
+                        EF.Property<Guid?>(
+                            supplier,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToQualitySpecificationsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.QualitySpecifications
+            .Where(qualitySpecification =>
+                request.ChildIds.Contains(qualitySpecification.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    qualitySpecification =>
+                        EF.Property<Guid?>(
+                            qualitySpecification,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromQualitySpecificationsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.QualitySpecifications
+            .Where(qualitySpecification =>
+                request.ChildIds.Contains(qualitySpecification.Id) &&
+                EF.Property<Guid?>(
+                    qualitySpecification,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    qualitySpecification =>
+                        EF.Property<Guid?>(
+                            qualitySpecification,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
+
+    public async Task AddToInventoryItemsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.InventoryItems
+            .Where(inventoryItem =>
+                request.ChildIds.Contains(inventoryItem.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    inventoryItem =>
+                        EF.Property<Guid?>(
+                            inventoryItem,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromInventoryItemsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.InventoryItems
+            .Where(inventoryItem =>
+                request.ChildIds.Contains(inventoryItem.Id) &&
+                EF.Property<Guid?>(
+                    inventoryItem,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    inventoryItem =>
+                        EF.Property<Guid?>(
+                            inventoryItem,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
 }

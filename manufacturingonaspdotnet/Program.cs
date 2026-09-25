@@ -1,7 +1,8 @@
 using manufacturingonaspdotnet.Api;
 using manufacturingonaspdotnet.Persistence;
 using manufacturingonaspdotnet.Service;
-
+using manufacturingonaspdotnet.Telemetry;
+using OpenTelemetry.Metrics;
 using Microsoft.EntityFrameworkCore;
 using Oracle.EntityFrameworkCore;
 
@@ -11,7 +12,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddOpenApi();
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<ApplicationDbContext>();
-
 
 var dbEngineEnvironment = builder.Configuration["DB_TYPE"];
 
@@ -113,91 +113,108 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     // etc.
 });
 
-builder.Services.AddScoped<IEnterpriseRepository, EnterpriseRepository>();
-builder.Services.AddScoped<IBusinessUnitRepository, BusinessUnitRepository>();
-builder.Services.AddScoped<IPlantRepository, PlantRepository>();
-builder.Services.AddScoped<IProductionLineRepository, ProductionLineRepository>();
-builder.Services.AddScoped<IWorkCenterRepository, WorkCenterRepository>();
-builder.Services.AddScoped<IItemRepository, ItemRepository>();
-builder.Services.AddScoped<IBOMRepository, BOMRepository>();
-builder.Services.AddScoped<IBOMItemRepository, BOMItemRepository>();
-builder.Services.AddScoped<IRoutingRepository, RoutingRepository>();
-builder.Services.AddScoped<IOperationRepository, OperationRepository>();
-builder.Services.AddScoped<IWorkOrderRepository, WorkOrderRepository>();
-builder.Services.AddScoped<IProductionScheduleRepository, ProductionScheduleRepository>();
-builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
-builder.Services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
-builder.Services.AddScoped<IPurchaseOrderLineRepository, PurchaseOrderLineRepository>();
-builder.Services.AddScoped<IGoodsReceiptRepository, GoodsReceiptRepository>();
-builder.Services.AddScoped<IGoodsReceiptLineRepository, GoodsReceiptLineRepository>();
-builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
-builder.Services.AddScoped<ILocationRepository, LocationRepository>();
-builder.Services.AddScoped<IInventoryItemRepository, InventoryItemRepository>();
-builder.Services.AddScoped<IInventoryTransactionRepository, InventoryTransactionRepository>();
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<ISalesOrderRepository, SalesOrderRepository>();
-builder.Services.AddScoped<ISalesOrderLineRepository, SalesOrderLineRepository>();
-builder.Services.AddScoped<IQualitySpecificationRepository, QualitySpecificationRepository>();
-builder.Services.AddScoped<IInspectionPlanRepository, InspectionPlanRepository>();
-builder.Services.AddScoped<IInspectionCharacteristicRepository, InspectionCharacteristicRepository>();
-builder.Services.AddScoped<IInspectionLotRepository, InspectionLotRepository>();
-builder.Services.AddScoped<IInspectionResultRepository, InspectionResultRepository>();
-builder.Services.AddScoped<INonconformanceRepository, NonconformanceRepository>();
-builder.Services.AddScoped<ICorrectiveActionRepository, CorrectiveActionRepository>();
-builder.Services.AddScoped<IAssetRepository, AssetRepository>();
-builder.Services.AddScoped<IMaintenancePlanRepository, MaintenancePlanRepository>();
-builder.Services.AddScoped<IMaintenanceOrderRepository, MaintenanceOrderRepository>();
-builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-builder.Services.AddScoped<IShiftRepository, ShiftRepository>();
-builder.Services.AddScoped<IShiftAssignmentRepository, ShiftAssignmentRepository>();
-builder.Services.AddScoped<IForecastRepository, ForecastRepository>();
-builder.Services.AddScoped<IForecastLineRepository, ForecastLineRepository>();
-builder.Services.AddScoped<IMRPRunRepository, MRPRunRepository>();
-builder.Services.AddScoped<IPlannedOrderRepository, PlannedOrderRepository>();
+    builder.Services.AddScoped<IEnterpriseRepository, EnterpriseRepository>();
+    builder.Services.AddScoped<IBusinessUnitRepository, BusinessUnitRepository>();
+    builder.Services.AddScoped<IPlantRepository, PlantRepository>();
+    builder.Services.AddScoped<IProductionLineRepository, ProductionLineRepository>();
+    builder.Services.AddScoped<IWorkCenterRepository, WorkCenterRepository>();
+    builder.Services.AddScoped<IItemRepository, ItemRepository>();
+    builder.Services.AddScoped<IBOMRepository, BOMRepository>();
+    builder.Services.AddScoped<IBOMItemRepository, BOMItemRepository>();
+    builder.Services.AddScoped<IRoutingRepository, RoutingRepository>();
+    builder.Services.AddScoped<IOperationRepository, OperationRepository>();
+    builder.Services.AddScoped<IWorkOrderRepository, WorkOrderRepository>();
+    builder.Services.AddScoped<IProductionScheduleRepository, ProductionScheduleRepository>();
+    builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+    builder.Services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
+    builder.Services.AddScoped<IPurchaseOrderLineRepository, PurchaseOrderLineRepository>();
+    builder.Services.AddScoped<IGoodsReceiptRepository, GoodsReceiptRepository>();
+    builder.Services.AddScoped<IGoodsReceiptLineRepository, GoodsReceiptLineRepository>();
+    builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
+    builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+    builder.Services.AddScoped<IInventoryItemRepository, InventoryItemRepository>();
+    builder.Services.AddScoped<IInventoryTransactionRepository, InventoryTransactionRepository>();
+    builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+    builder.Services.AddScoped<ISalesOrderRepository, SalesOrderRepository>();
+    builder.Services.AddScoped<ISalesOrderLineRepository, SalesOrderLineRepository>();
+    builder.Services.AddScoped<IQualitySpecificationRepository, QualitySpecificationRepository>();
+    builder.Services.AddScoped<IInspectionPlanRepository, InspectionPlanRepository>();
+    builder.Services.AddScoped<IInspectionCharacteristicRepository, InspectionCharacteristicRepository>();
+    builder.Services.AddScoped<IInspectionLotRepository, InspectionLotRepository>();
+    builder.Services.AddScoped<IInspectionResultRepository, InspectionResultRepository>();
+    builder.Services.AddScoped<INonconformanceRepository, NonconformanceRepository>();
+    builder.Services.AddScoped<ICorrectiveActionRepository, CorrectiveActionRepository>();
+    builder.Services.AddScoped<IAssetRepository, AssetRepository>();
+    builder.Services.AddScoped<IMaintenancePlanRepository, MaintenancePlanRepository>();
+    builder.Services.AddScoped<IMaintenanceOrderRepository, MaintenanceOrderRepository>();
+    builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+    builder.Services.AddScoped<IShiftRepository, ShiftRepository>();
+    builder.Services.AddScoped<IShiftAssignmentRepository, ShiftAssignmentRepository>();
+    builder.Services.AddScoped<IForecastRepository, ForecastRepository>();
+    builder.Services.AddScoped<IForecastLineRepository, ForecastLineRepository>();
+    builder.Services.AddScoped<IMRPRunRepository, MRPRunRepository>();
+    builder.Services.AddScoped<IPlannedOrderRepository, PlannedOrderRepository>();
 
-builder.Services.AddScoped<IEnterpriseService, EnterpriseService>();
-builder.Services.AddScoped<IBusinessUnitService, BusinessUnitService>();
-builder.Services.AddScoped<IPlantService, PlantService>();
-builder.Services.AddScoped<IProductionLineService, ProductionLineService>();
-builder.Services.AddScoped<IWorkCenterService, WorkCenterService>();
-builder.Services.AddScoped<IItemService, ItemService>();
-builder.Services.AddScoped<IBOMService, BOMService>();
-builder.Services.AddScoped<IBOMItemService, BOMItemService>();
-builder.Services.AddScoped<IRoutingService, RoutingService>();
-builder.Services.AddScoped<IOperationService, OperationService>();
-builder.Services.AddScoped<IWorkOrderService, WorkOrderService>();
-builder.Services.AddScoped<IProductionScheduleService, ProductionScheduleService>();
-builder.Services.AddScoped<ISupplierService, SupplierService>();
-builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
-builder.Services.AddScoped<IPurchaseOrderLineService, PurchaseOrderLineService>();
-builder.Services.AddScoped<IGoodsReceiptService, GoodsReceiptService>();
-builder.Services.AddScoped<IGoodsReceiptLineService, GoodsReceiptLineService>();
-builder.Services.AddScoped<IWarehouseService, WarehouseService>();
-builder.Services.AddScoped<ILocationService, LocationService>();
-builder.Services.AddScoped<IInventoryItemService, InventoryItemService>();
-builder.Services.AddScoped<IInventoryTransactionService, InventoryTransactionService>();
-builder.Services.AddScoped<ICustomerService, CustomerService>();
-builder.Services.AddScoped<ISalesOrderService, SalesOrderService>();
-builder.Services.AddScoped<ISalesOrderLineService, SalesOrderLineService>();
-builder.Services.AddScoped<IQualitySpecificationService, QualitySpecificationService>();
-builder.Services.AddScoped<IInspectionPlanService, InspectionPlanService>();
-builder.Services.AddScoped<IInspectionCharacteristicService, InspectionCharacteristicService>();
-builder.Services.AddScoped<IInspectionLotService, InspectionLotService>();
-builder.Services.AddScoped<IInspectionResultService, InspectionResultService>();
-builder.Services.AddScoped<INonconformanceService, NonconformanceService>();
-builder.Services.AddScoped<ICorrectiveActionService, CorrectiveActionService>();
-builder.Services.AddScoped<IAssetService, AssetService>();
-builder.Services.AddScoped<IMaintenancePlanService, MaintenancePlanService>();
-builder.Services.AddScoped<IMaintenanceOrderService, MaintenanceOrderService>();
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IShiftService, ShiftService>();
-builder.Services.AddScoped<IShiftAssignmentService, ShiftAssignmentService>();
-builder.Services.AddScoped<IForecastService, ForecastService>();
-builder.Services.AddScoped<IForecastLineService, ForecastLineService>();
-builder.Services.AddScoped<IMRPRunService, MRPRunService>();
-builder.Services.AddScoped<IPlannedOrderService, PlannedOrderService>();
+    builder.Services.AddScoped<IEnterpriseService, EnterpriseService>();
+    builder.Services.AddScoped<IBusinessUnitService, BusinessUnitService>();
+    builder.Services.AddScoped<IPlantService, PlantService>();
+    builder.Services.AddScoped<IProductionLineService, ProductionLineService>();
+    builder.Services.AddScoped<IWorkCenterService, WorkCenterService>();
+    builder.Services.AddScoped<IItemService, ItemService>();
+    builder.Services.AddScoped<IBOMService, BOMService>();
+    builder.Services.AddScoped<IBOMItemService, BOMItemService>();
+    builder.Services.AddScoped<IRoutingService, RoutingService>();
+    builder.Services.AddScoped<IOperationService, OperationService>();
+    builder.Services.AddScoped<IWorkOrderService, WorkOrderService>();
+    builder.Services.AddScoped<IProductionScheduleService, ProductionScheduleService>();
+    builder.Services.AddScoped<ISupplierService, SupplierService>();
+    builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
+    builder.Services.AddScoped<IPurchaseOrderLineService, PurchaseOrderLineService>();
+    builder.Services.AddScoped<IGoodsReceiptService, GoodsReceiptService>();
+    builder.Services.AddScoped<IGoodsReceiptLineService, GoodsReceiptLineService>();
+    builder.Services.AddScoped<IWarehouseService, WarehouseService>();
+    builder.Services.AddScoped<ILocationService, LocationService>();
+    builder.Services.AddScoped<IInventoryItemService, InventoryItemService>();
+    builder.Services.AddScoped<IInventoryTransactionService, InventoryTransactionService>();
+    builder.Services.AddScoped<ICustomerService, CustomerService>();
+    builder.Services.AddScoped<ISalesOrderService, SalesOrderService>();
+    builder.Services.AddScoped<ISalesOrderLineService, SalesOrderLineService>();
+    builder.Services.AddScoped<IQualitySpecificationService, QualitySpecificationService>();
+    builder.Services.AddScoped<IInspectionPlanService, InspectionPlanService>();
+    builder.Services.AddScoped<IInspectionCharacteristicService, InspectionCharacteristicService>();
+    builder.Services.AddScoped<IInspectionLotService, InspectionLotService>();
+    builder.Services.AddScoped<IInspectionResultService, InspectionResultService>();
+    builder.Services.AddScoped<INonconformanceService, NonconformanceService>();
+    builder.Services.AddScoped<ICorrectiveActionService, CorrectiveActionService>();
+    builder.Services.AddScoped<IAssetService, AssetService>();
+    builder.Services.AddScoped<IMaintenancePlanService, MaintenancePlanService>();
+    builder.Services.AddScoped<IMaintenanceOrderService, MaintenanceOrderService>();
+    builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+    builder.Services.AddScoped<IShiftService, ShiftService>();
+    builder.Services.AddScoped<IShiftAssignmentService, ShiftAssignmentService>();
+    builder.Services.AddScoped<IForecastService, ForecastService>();
+    builder.Services.AddScoped<IForecastLineService, ForecastLineService>();
+    builder.Services.AddScoped<IMRPRunService, MRPRunService>();
+    builder.Services.AddScoped<IPlannedOrderService, PlannedOrderService>();
+
+// apply the service resolver
+builder.Services.AddScoped<IServiceResolver, ServiceResolver>();
+
+builder.Services.AddSingleton<ApplicationTelemetry>();
+
+builder.Services
+    .AddOpenTelemetry()
+    .WithMetrics(metrics =>
+    {
+        metrics.AddMeter("Harbormaster.Application");
+
+        metrics.AddPrometheusExporter();
+    });
 
 var app = builder.Build();
+
+app.MapPrometheusScrapingEndpoint();
+
 
 // Health endpoint
 app.MapHealthChecks("/health");
@@ -226,47 +243,47 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-app.MapEnterpriseEndpoints();
-app.MapBusinessUnitEndpoints();
-app.MapPlantEndpoints();
-app.MapProductionLineEndpoints();
-app.MapWorkCenterEndpoints();
-app.MapItemEndpoints();
-app.MapBOMEndpoints();
-app.MapBOMItemEndpoints();
-app.MapRoutingEndpoints();
-app.MapOperationEndpoints();
-app.MapWorkOrderEndpoints();
-app.MapProductionScheduleEndpoints();
-app.MapSupplierEndpoints();
-app.MapPurchaseOrderEndpoints();
-app.MapPurchaseOrderLineEndpoints();
-app.MapGoodsReceiptEndpoints();
-app.MapGoodsReceiptLineEndpoints();
-app.MapWarehouseEndpoints();
-app.MapLocationEndpoints();
-app.MapInventoryItemEndpoints();
-app.MapInventoryTransactionEndpoints();
-app.MapCustomerEndpoints();
-app.MapSalesOrderEndpoints();
-app.MapSalesOrderLineEndpoints();
-app.MapQualitySpecificationEndpoints();
-app.MapInspectionPlanEndpoints();
-app.MapInspectionCharacteristicEndpoints();
-app.MapInspectionLotEndpoints();
-app.MapInspectionResultEndpoints();
-app.MapNonconformanceEndpoints();
-app.MapCorrectiveActionEndpoints();
-app.MapAssetEndpoints();
-app.MapMaintenancePlanEndpoints();
-app.MapMaintenanceOrderEndpoints();
-app.MapEmployeeEndpoints();
-app.MapShiftEndpoints();
-app.MapShiftAssignmentEndpoints();
-app.MapForecastEndpoints();
-app.MapForecastLineEndpoints();
-app.MapMRPRunEndpoints();
-app.MapPlannedOrderEndpoints();
+    app.MapEnterpriseEndpoints();
+    app.MapBusinessUnitEndpoints();
+    app.MapPlantEndpoints();
+    app.MapProductionLineEndpoints();
+    app.MapWorkCenterEndpoints();
+    app.MapItemEndpoints();
+    app.MapBOMEndpoints();
+    app.MapBOMItemEndpoints();
+    app.MapRoutingEndpoints();
+    app.MapOperationEndpoints();
+    app.MapWorkOrderEndpoints();
+    app.MapProductionScheduleEndpoints();
+    app.MapSupplierEndpoints();
+    app.MapPurchaseOrderEndpoints();
+    app.MapPurchaseOrderLineEndpoints();
+    app.MapGoodsReceiptEndpoints();
+    app.MapGoodsReceiptLineEndpoints();
+    app.MapWarehouseEndpoints();
+    app.MapLocationEndpoints();
+    app.MapInventoryItemEndpoints();
+    app.MapInventoryTransactionEndpoints();
+    app.MapCustomerEndpoints();
+    app.MapSalesOrderEndpoints();
+    app.MapSalesOrderLineEndpoints();
+    app.MapQualitySpecificationEndpoints();
+    app.MapInspectionPlanEndpoints();
+    app.MapInspectionCharacteristicEndpoints();
+    app.MapInspectionLotEndpoints();
+    app.MapInspectionResultEndpoints();
+    app.MapNonconformanceEndpoints();
+    app.MapCorrectiveActionEndpoints();
+    app.MapAssetEndpoints();
+    app.MapMaintenancePlanEndpoints();
+    app.MapMaintenanceOrderEndpoints();
+    app.MapEmployeeEndpoints();
+    app.MapShiftEndpoints();
+    app.MapShiftAssignmentEndpoints();
+    app.MapForecastEndpoints();
+    app.MapForecastLineEndpoints();
+    app.MapMRPRunEndpoints();
+    app.MapPlannedOrderEndpoints();
 
 app.Run();
 

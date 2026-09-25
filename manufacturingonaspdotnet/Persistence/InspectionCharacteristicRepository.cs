@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -44,4 +47,5 @@ public class InspectionCharacteristicRepository : IInspectionCharacteristicRepos
         _db.InspectionCharacteristics.Remove(inspectionCharacteristic);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
 }

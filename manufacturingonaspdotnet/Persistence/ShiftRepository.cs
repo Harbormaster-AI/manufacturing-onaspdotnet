@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -44,4 +47,41 @@ public class ShiftRepository : IShiftRepository
         _db.Shifts.Remove(shift);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToAssignmentsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.ShiftAssignments
+            .Where(shiftAssignment =>
+                request.ChildIds.Contains(shiftAssignment.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    shiftAssignment =>
+                        EF.Property<Guid?>(
+                            shiftAssignment,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromAssignmentsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.ShiftAssignments
+            .Where(shiftAssignment =>
+                request.ChildIds.Contains(shiftAssignment.Id) &&
+                EF.Property<Guid?>(
+                    shiftAssignment,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    shiftAssignment =>
+                        EF.Property<Guid?>(
+                            shiftAssignment,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
 }

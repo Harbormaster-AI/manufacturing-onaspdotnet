@@ -1,3 +1,4 @@
+
 using manufacturingonaspdotnet.Contracts;
 
 namespace manufacturingonaspdotnet.Domain;

@@ -1,4 +1,5 @@
 using manufacturingonaspdotnet.Domain;
+using manufacturingonaspdotnet.Contracts;
 
 namespace manufacturingonaspdotnet.Persistence;
 
@@ -9,4 +10,8 @@ public interface IBOMRepository
     Task AddAsync(BOM bOM, CancellationToken cancellationToken);
     Task UpdateAsync(BOM bOM, CancellationToken cancellationToken);
     Task DeleteAsync(BOM bOM, CancellationToken cancellationToken);
+
+    Task AddToBomItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromBomItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+
 }

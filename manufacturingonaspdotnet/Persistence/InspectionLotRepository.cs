@@ -1,4 +1,7 @@
+
+using manufacturingonaspdotnet.Contracts;
 using manufacturingonaspdotnet.Domain;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace manufacturingonaspdotnet.Persistence;
@@ -48,4 +51,41 @@ public class InspectionLotRepository : IInspectionLotRepository
         _db.InspectionLots.Remove(inspectionLot);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+
+    public async Task AddToResultsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.InspectionResults
+            .Where(inspectionResult =>
+                request.ChildIds.Contains(inspectionResult.Id))
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    inspectionResult =>
+                        EF.Property<Guid?>(
+                            inspectionResult,
+                            "PlannedOrder_Id"),
+                    request.ParentId));
+    }
+
+    public async Task RemoveFromResultsAsync(
+        MultipleAssociationRequest request,
+        CancellationToken cancellationToken)
+    {
+        await _db.InspectionResults
+            .Where(inspectionResult =>
+                request.ChildIds.Contains(inspectionResult.Id) &&
+                EF.Property<Guid?>(
+                    inspectionResult,
+                    "PlannedOrder_Id") == request.ParentId)
+            .ExecuteUpdateAsync(setters =>
+                setters.SetProperty(
+                    inspectionResult =>
+                        EF.Property<Guid?>(
+                            inspectionResult,
+                            "PlannedOrder_Id"),
+                    (Guid?)null));
+    }
+
 }

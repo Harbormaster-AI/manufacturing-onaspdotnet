@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace manufacturingonaspdotnet.Domain;
 
+
     [ComplexType]
     public record Money(
     decimal Amount,

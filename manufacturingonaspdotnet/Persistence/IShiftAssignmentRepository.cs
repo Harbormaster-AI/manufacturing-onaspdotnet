@@ -1,4 +1,5 @@
 using manufacturingonaspdotnet.Domain;
+using manufacturingonaspdotnet.Contracts;
 
 namespace manufacturingonaspdotnet.Persistence;
 
@@ -9,4 +10,6 @@ public interface IShiftAssignmentRepository
     Task AddAsync(ShiftAssignment shiftAssignment, CancellationToken cancellationToken);
     Task UpdateAsync(ShiftAssignment shiftAssignment, CancellationToken cancellationToken);
     Task DeleteAsync(ShiftAssignment shiftAssignment, CancellationToken cancellationToken);
+
+
 }
