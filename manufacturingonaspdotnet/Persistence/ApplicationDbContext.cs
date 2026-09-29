@@ -62,25 +62,25 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<BusinessUnit>()
             .HasOne<Enterprise>()
             .WithMany(parent => parent.BusinessUnits)
-            .HasForeignKey("Enterprise_Id");
+            .HasForeignKey("BusinessUnits_Id");
 
         // Enterprise has one or more Plants of type Plant
         modelBuilder.Entity<Plant>()
             .HasOne<Enterprise>()
             .WithMany(parent => parent.Plants)
-            .HasForeignKey("Enterprise_Id");
+            .HasForeignKey("Plants_Id");
 
         // Enterprise has one or more Suppliers of type Supplier
         modelBuilder.Entity<Supplier>()
             .HasOne<Enterprise>()
             .WithMany(parent => parent.Suppliers)
-            .HasForeignKey("Enterprise_Id");
+            .HasForeignKey("Suppliers_Id");
 
         // Enterprise has one or more Customers of type Customer
         modelBuilder.Entity<Customer>()
             .HasOne<Enterprise>()
             .WithMany(parent => parent.Customers)
-            .HasForeignKey("Enterprise_Id");
+            .HasForeignKey("Customers_Id");
 
         // BusinessUnit has one Enterprise of type Enterprise
         modelBuilder.Entity<BusinessUnit>()
@@ -93,13 +93,13 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Item>()
             .HasOne<BusinessUnit>()
             .WithMany(parent => parent.Items)
-            .HasForeignKey("BusinessUnit_Id");
+            .HasForeignKey("Items_Id");
 
         // BusinessUnit has one or more Plants of type Plant
         modelBuilder.Entity<Plant>()
             .HasOne<BusinessUnit>()
             .WithMany(parent => parent.Plants)
-            .HasForeignKey("BusinessUnit_Id");
+            .HasForeignKey("Plants_Id");
 
         // Plant has one Enterprise of type Enterprise
         modelBuilder.Entity<Plant>()
@@ -112,31 +112,31 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<ProductionLine>()
             .HasOne<Plant>()
             .WithMany(parent => parent.ProductionLines)
-            .HasForeignKey("Plant_Id");
+            .HasForeignKey("ProductionLines_Id");
 
         // Plant has one or more WorkCenters of type WorkCenter
         modelBuilder.Entity<WorkCenter>()
             .HasOne<Plant>()
             .WithMany(parent => parent.WorkCenters)
-            .HasForeignKey("Plant_Id");
+            .HasForeignKey("WorkCenters_Id");
 
         // Plant has one or more Warehouses of type Warehouse
         modelBuilder.Entity<Warehouse>()
             .HasOne<Plant>()
             .WithMany(parent => parent.Warehouses)
-            .HasForeignKey("Plant_Id");
+            .HasForeignKey("Warehouses_Id");
 
         // Plant has one or more Assets of type Asset
         modelBuilder.Entity<Asset>()
             .HasOne<Plant>()
             .WithMany(parent => parent.Assets)
-            .HasForeignKey("Plant_Id");
+            .HasForeignKey("Assets_Id");
 
         // Plant has one or more ProductionSchedules of type ProductionSchedule
         modelBuilder.Entity<ProductionSchedule>()
             .HasOne<Plant>()
             .WithMany(parent => parent.ProductionSchedules)
-            .HasForeignKey("Plant_Id");
+            .HasForeignKey("ProductionSchedules_Id");
 
         // ProductionLine has one Plant of type Plant
         modelBuilder.Entity<ProductionLine>()
@@ -149,7 +149,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<WorkCenter>()
             .HasOne<ProductionLine>()
             .WithMany(parent => parent.WorkCenters)
-            .HasForeignKey("ProductionLine_Id");
+            .HasForeignKey("WorkCenters_Id");
 
         // WorkCenter has one ProductionLine of type ProductionLine
         modelBuilder.Entity<WorkCenter>()
@@ -162,13 +162,13 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Asset>()
             .HasOne<WorkCenter>()
             .WithMany(parent => parent.Assets)
-            .HasForeignKey("WorkCenter_Id");
+            .HasForeignKey("Assets_Id");
 
         // WorkCenter has one or more MaintenanceOrders of type MaintenanceOrder
         modelBuilder.Entity<MaintenanceOrder>()
             .HasOne<WorkCenter>()
             .WithMany(parent => parent.MaintenanceOrders)
-            .HasForeignKey("WorkCenter_Id");
+            .HasForeignKey("MaintenanceOrders_Id");
 
         // Item has one BusinessUnit of type BusinessUnit
         modelBuilder.Entity<Item>()
@@ -181,31 +181,31 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<BOM>()
             .HasOne<Item>()
             .WithMany(parent => parent.Boms)
-            .HasForeignKey("Item_Id");
+            .HasForeignKey("Boms_Id");
 
         // Item has one or more Routings of type Routing
         modelBuilder.Entity<Routing>()
             .HasOne<Item>()
             .WithMany(parent => parent.Routings)
-            .HasForeignKey("Item_Id");
+            .HasForeignKey("Routings_Id");
 
         // Item has one or more Suppliers of type Supplier
         modelBuilder.Entity<Supplier>()
             .HasOne<Item>()
             .WithMany(parent => parent.Suppliers)
-            .HasForeignKey("Item_Id");
+            .HasForeignKey("Suppliers_Id");
 
         // Item has one or more QualitySpecifications of type QualitySpecification
         modelBuilder.Entity<QualitySpecification>()
             .HasOne<Item>()
             .WithMany(parent => parent.QualitySpecifications)
-            .HasForeignKey("Item_Id");
+            .HasForeignKey("QualitySpecifications_Id");
 
         // Item has one or more InventoryItems of type InventoryItem
         modelBuilder.Entity<InventoryItem>()
             .HasOne<Item>()
             .WithMany(parent => parent.InventoryItems)
-            .HasForeignKey("Item_Id");
+            .HasForeignKey("InventoryItems_Id");
 
         // BOM has one ParentItem of type Item
         modelBuilder.Entity<BOM>()
@@ -218,7 +218,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<BOMItem>()
             .HasOne<BOM>()
             .WithMany(parent => parent.BomItems)
-            .HasForeignKey("BOM_Id");
+            .HasForeignKey("BomItems_Id");
 
         // BOMItem has one Bom of type BOM
         modelBuilder.Entity<BOMItem>()
@@ -244,7 +244,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Operation>()
             .HasOne<Routing>()
             .WithMany(parent => parent.Operations)
-            .HasForeignKey("Routing_Id");
+            .HasForeignKey("Operations_Id");
 
         // Operation has one Routing of type Routing
         modelBuilder.Entity<Operation>()
@@ -313,26 +313,26 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<WorkOrder>()
             .HasOne<ProductionSchedule>()
             .WithMany(parent => parent.WorkOrders)
-            .HasForeignKey("ProductionSchedule_Id");
+            .HasForeignKey("WorkOrders_Id");
 
 
         // Supplier has one or more Enterprises of type Enterprise
         modelBuilder.Entity<Enterprise>()
             .HasOne<Supplier>()
             .WithMany(parent => parent.Enterprises)
-            .HasForeignKey("Supplier_Id");
+            .HasForeignKey("Enterprises_Id");
 
         // Supplier has one or more Items of type Item
         modelBuilder.Entity<Item>()
             .HasOne<Supplier>()
             .WithMany(parent => parent.Items)
-            .HasForeignKey("Supplier_Id");
+            .HasForeignKey("Items_Id");
 
         // Supplier has one or more PurchaseOrders of type PurchaseOrder
         modelBuilder.Entity<PurchaseOrder>()
             .HasOne<Supplier>()
             .WithMany(parent => parent.PurchaseOrders)
-            .HasForeignKey("Supplier_Id");
+            .HasForeignKey("PurchaseOrders_Id");
 
         // PurchaseOrder has one Supplier of type Supplier
         modelBuilder.Entity<PurchaseOrder>()
@@ -351,13 +351,13 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<PurchaseOrderLine>()
             .HasOne<PurchaseOrder>()
             .WithMany(parent => parent.Lines)
-            .HasForeignKey("PurchaseOrder_Id");
+            .HasForeignKey("Lines_Id");
 
         // PurchaseOrder has one or more GoodsReceipts of type GoodsReceipt
         modelBuilder.Entity<GoodsReceipt>()
             .HasOne<PurchaseOrder>()
             .WithMany(parent => parent.GoodsReceipts)
-            .HasForeignKey("PurchaseOrder_Id");
+            .HasForeignKey("GoodsReceipts_Id");
 
         // PurchaseOrderLine has one PurchaseOrder of type PurchaseOrder
         modelBuilder.Entity<PurchaseOrderLine>()
@@ -389,7 +389,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<GoodsReceiptLine>()
             .HasOne<GoodsReceipt>()
             .WithMany(parent => parent.Lines)
-            .HasForeignKey("GoodsReceipt_Id");
+            .HasForeignKey("Lines_Id");
 
         // GoodsReceiptLine has one GoodsReceipt of type GoodsReceipt
         modelBuilder.Entity<GoodsReceiptLine>()
@@ -421,13 +421,13 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Location>()
             .HasOne<Warehouse>()
             .WithMany(parent => parent.Locations)
-            .HasForeignKey("Warehouse_Id");
+            .HasForeignKey("Locations_Id");
 
         // Warehouse has one or more InventoryItems of type InventoryItem
         modelBuilder.Entity<InventoryItem>()
             .HasOne<Warehouse>()
             .WithMany(parent => parent.InventoryItems)
-            .HasForeignKey("Warehouse_Id");
+            .HasForeignKey("InventoryItems_Id");
 
         // Location has one Warehouse of type Warehouse
         modelBuilder.Entity<Location>()
@@ -440,7 +440,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<InventoryItem>()
             .HasOne<Location>()
             .WithMany(parent => parent.InventoryItems)
-            .HasForeignKey("Location_Id");
+            .HasForeignKey("InventoryItems_Id");
 
         // InventoryItem has one Item of type Item
         modelBuilder.Entity<InventoryItem>()
@@ -491,13 +491,13 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Enterprise>()
             .HasOne<Customer>()
             .WithMany(parent => parent.Enterprises)
-            .HasForeignKey("Customer_Id");
+            .HasForeignKey("Enterprises_Id");
 
         // Customer has one or more SalesOrders of type SalesOrder
         modelBuilder.Entity<SalesOrder>()
             .HasOne<Customer>()
             .WithMany(parent => parent.SalesOrders)
-            .HasForeignKey("Customer_Id");
+            .HasForeignKey("SalesOrders_Id");
 
         // SalesOrder has one Customer of type Customer
         modelBuilder.Entity<SalesOrder>()
@@ -516,13 +516,13 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<SalesOrderLine>()
             .HasOne<SalesOrder>()
             .WithMany(parent => parent.Lines)
-            .HasForeignKey("SalesOrder_Id");
+            .HasForeignKey("Lines_Id");
 
         // SalesOrder has one or more WorkOrders of type WorkOrder
         modelBuilder.Entity<WorkOrder>()
             .HasOne<SalesOrder>()
             .WithMany(parent => parent.WorkOrders)
-            .HasForeignKey("SalesOrder_Id");
+            .HasForeignKey("WorkOrders_Id");
 
         // SalesOrderLine has one SalesOrder of type SalesOrder
         modelBuilder.Entity<SalesOrderLine>()
@@ -555,7 +555,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<InspectionCharacteristic>()
             .HasOne<InspectionPlan>()
             .WithMany(parent => parent.Characteristics)
-            .HasForeignKey("InspectionPlan_Id");
+            .HasForeignKey("Characteristics_Id");
 
         // InspectionCharacteristic has one InspectionPlan of type InspectionPlan
         modelBuilder.Entity<InspectionCharacteristic>()
@@ -587,7 +587,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<InspectionResult>()
             .HasOne<InspectionLot>()
             .WithMany(parent => parent.Results)
-            .HasForeignKey("InspectionLot_Id");
+            .HasForeignKey("Results_Id");
 
         // InspectionResult has one InspectionLot of type InspectionLot
         modelBuilder.Entity<InspectionResult>()
@@ -657,13 +657,13 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<MaintenanceOrder>()
             .HasOne<Asset>()
             .WithMany(parent => parent.MaintenanceOrders)
-            .HasForeignKey("Asset_Id");
+            .HasForeignKey("MaintenanceOrders_Id");
 
         // Asset has one or more MaintenancePlans of type MaintenancePlan
         modelBuilder.Entity<MaintenancePlan>()
             .HasOne<Asset>()
             .WithMany(parent => parent.MaintenancePlans)
-            .HasForeignKey("Asset_Id");
+            .HasForeignKey("MaintenancePlans_Id");
 
         // MaintenancePlan has one Asset of type Asset
         modelBuilder.Entity<MaintenancePlan>()
@@ -676,7 +676,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<MaintenanceOrder>()
             .HasOne<MaintenancePlan>()
             .WithMany(parent => parent.MaintenanceOrders)
-            .HasForeignKey("MaintenancePlan_Id");
+            .HasForeignKey("MaintenanceOrders_Id");
 
         // MaintenanceOrder has one Asset of type Asset
         modelBuilder.Entity<MaintenanceOrder>()
@@ -708,13 +708,13 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<ShiftAssignment>()
             .HasOne<Employee>()
             .WithMany(parent => parent.ShiftAssignments)
-            .HasForeignKey("Employee_Id");
+            .HasForeignKey("ShiftAssignments_Id");
 
         // Employee has one or more CorrectiveActions of type CorrectiveAction
         modelBuilder.Entity<CorrectiveAction>()
             .HasOne<Employee>()
             .WithMany(parent => parent.CorrectiveActions)
-            .HasForeignKey("Employee_Id");
+            .HasForeignKey("CorrectiveActions_Id");
 
         // Shift has one Plant of type Plant
         modelBuilder.Entity<Shift>()
@@ -727,7 +727,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<ShiftAssignment>()
             .HasOne<Shift>()
             .WithMany(parent => parent.Assignments)
-            .HasForeignKey("Shift_Id");
+            .HasForeignKey("Assignments_Id");
 
         // ShiftAssignment has one Shift of type Shift
         modelBuilder.Entity<ShiftAssignment>()
@@ -753,7 +753,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<ForecastLine>()
             .HasOne<Forecast>()
             .WithMany(parent => parent.Lines)
-            .HasForeignKey("Forecast_Id");
+            .HasForeignKey("Lines_Id");
 
         // ForecastLine has one Forecast of type Forecast
         modelBuilder.Entity<ForecastLine>()
@@ -779,7 +779,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<PlannedOrder>()
             .HasOne<MRPRun>()
             .WithMany(parent => parent.PlannedOrders)
-            .HasForeignKey("MRPRun_Id");
+            .HasForeignKey("PlannedOrders_Id");
 
         // PlannedOrder has one MrpRun of type MRPRun
         modelBuilder.Entity<PlannedOrder>()
